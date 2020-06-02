@@ -126,14 +126,14 @@ trainer_one = Trainer("Red", 3, 1, [a, b, c])
 trainer_two = Trainer("Blue", 3, 1, [c, b, a])
 
 
-trainer_one.attack_other_trainer(trainer_two)
+trainer_one.attack_other_trainer(trainer_two)   # prints to terminal
 
-trainer_one.attack_other_trainer(trainer_two)
+trainer_one.attack_other_trainer(trainer_two)   # prints to terminal
 
-trainer_one.attack_other_trainer(trainer_two)
+trainer_one.attack_other_trainer(trainer_two)   # prints to terminal
 
-trainer_one.attack_other_trainer(trainer_two)
+trainer_one.attack_other_trainer(trainer_two)   # prints to terminal
 
-trainer_one.attack_other_trainer(trainer_two)
+trainer_one.attack_other_trainer(trainer_two)   # prints to terminal
 
-trainer_two.useRevive()
+trainer_two.useRevive()   # prints to terminal
