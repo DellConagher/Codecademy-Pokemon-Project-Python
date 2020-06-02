@@ -1,5 +1,5 @@
 class Pokemon:
-    def __init__(self, name, level, type, is_knocked_out=False):
+    def __init__(self, name, level, type):
         self.name = name
         self.level = level
         if level > 100:
@@ -7,72 +7,53 @@ class Pokemon:
         self.max_health = level * 5
         self.health = self.max_health
         self.type = type
-        self.is_knocked_out = is_knocked_out
+        self.is_knocked_out = False
+
 
     def knock_out(self):
         if self.health <= 0:
             self.is_knocked_out = True
-            print("{name} has been knocked out!".format(name=self.name))
+            print(f"{self.name} has been knocked out!")
         else:
             self.is_knocked_out = False
-            print("not dead")                                                                           #remove this when finished testing
+            print("not knocked out")                                                                           #remove this when finished testing
         
 
     def revive(self):
         if self.is_knocked_out == True:
             self.health = self.max_health / 2
             self.is_knocked_out = False
-            print("{name} has been revived with 50% health!".format(name=self.name))
+            print(f"{self.name} has been revived with 50% health!")
         else:
-            print("{name} is not knocked out".format(name=self.name))
+            print(f"{self.name} is not knocked out")
 
 
 
     def lose_health(self, health_lost):
         health_remaining = self.health - health_lost
-        self.health = health_remaining
-        lose_h = "{name} lost {health_lost} health. {name} now has {health} health".format(name=self.name, health=self.health, health_lost=health_lost)
-        print(lose_h)
+        self.health = health_remaining        
         if self.health <= 0:
             self.health = 0
-            self.knock_out()
-        
-
+            self.knock_out()        
+        print(f"{self.name} lost {health_lost} health. {self.name} now has {self.health} health")
 
     def gain_health(self, health_gained):
         if self.health + health_gained > self.max_health:
             self.health = self.max_health
         else:
             self.health += health_gained
-
-        gain_h = "{name} gained {health_gained}. {name} now has {health} health".format(name=self.name, health=self.health, health_gained=health_gained)
-        print(gain_h)
+        print(f"{self.name} gained {health_gained}. {self.name} now has {self.health} health")
+        
 
     
     def attack(self, other_pokemon):
         types = ["grass", "fire", "water"]
         damage = 0
-        if self.type is types[0] and other_pokemon.type is types[1]:
+        if (self.type is types[0] and other_pokemon.type is types[1]) or (self.type is types[1] and other_pokemon.type is types[2]) or (self.type is types[2] and other_pokemon.type is types[0]):
             damage = self.level / 2
             print(f"{self.name} attacks {other_pokemon.name} for {damage} damage!")
             print("It wasn't very effective.")
-        elif self.type is types[0] and other_pokemon.type is types[2]:
-            damage = self.level * 2
-            print(f"{self.name} attacks {other_pokemon.name} for {damage} damage!")
-            print("It was super effective!")
-        elif self.type is types[1] and other_pokemon.type is types[0]:
-            damage = self.level * 2
-            print(f"{self.name} attacks {other_pokemon.name} for {damage} damage!")
-            print("It was super effective!")
-        elif self.type is types[1] and other_pokemon.type is types[2]:
-            damage = self.level / 2
-            print(f"{self.name} attacks {other_pokemon.name} for {damage} damage!")
-            print("It wasn't very effective.")
-        elif self.type is types[2] and other_pokemon.type is types[0]:
-            damage = self.level / 2
-            print(f"{self.name} attacks {other_pokemon.name} for {damage} damage!")
-            print("It wasn't very effective.")
-        elif self.type is types[2] and other_pokemon.type is types[1]:
+        elif (self.type is types[0] and other_pokemon.type is types[2]) or (self.type is types[1] and other_pokemon.type is types[0]) or (self.type is types[2] and other_pokemon.type is types[1]):
             damage = self.level * 2
             print(f"{self.name} attacks {other_pokemon.name} for {damage} damage!")
             print("It was super effective!")
