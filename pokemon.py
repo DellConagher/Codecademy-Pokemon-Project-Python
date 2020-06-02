@@ -23,7 +23,7 @@ class Pokemon:
         if self.is_knocked_out == True:
             self.health = self.max_health / 2
             self.is_knocked_out = False
-            print(f"{self.name} has been revived with 50% health!")
+            print(f"{self.name} has been revived and has {self.health} health!")
         else:
             print(f"{self.name} is not knocked out")
 
@@ -31,11 +31,13 @@ class Pokemon:
 
     def lose_health(self, health_lost):
         health_remaining = self.health - health_lost
-        self.health = health_remaining        
+        self.health = health_remaining
         if self.health <= 0:
             self.health = 0
-            self.knock_out()        
         print(f"{self.name} lost {health_lost} health. {self.name} now has {self.health} health")
+        if self.health <= 0:
+            self.knock_out()        
+        
 
     def gain_health(self, health_gained):
         if self.health + health_gained > self.max_health:
@@ -49,18 +51,21 @@ class Pokemon:
     def attack(self, other_pokemon):
         types = ["grass", "fire", "water"]
         damage = 0
-        if (self.type is types[0] and other_pokemon.type is types[1]) or (self.type is types[1] and other_pokemon.type is types[2]) or (self.type is types[2] and other_pokemon.type is types[0]):
-            damage = self.level / 2
-            print(f"{self.name} attacks {other_pokemon.name} for {damage} damage!")
-            print("It wasn't very effective.")
-        elif (self.type is types[0] and other_pokemon.type is types[2]) or (self.type is types[1] and other_pokemon.type is types[0]) or (self.type is types[2] and other_pokemon.type is types[1]):
-            damage = self.level * 2
-            print(f"{self.name} attacks {other_pokemon.name} for {damage} damage!")
-            print("It was super effective!")
+        if self.health > 0:
+            if (self.type is types[0] and other_pokemon.type is types[1]) or (self.type is types[1] and other_pokemon.type is types[2]) or (self.type is types[2] and other_pokemon.type is types[0]):
+                damage = self.level / 2
+                print(f"{self.name} attacks {other_pokemon.name} for {damage} damage!")
+                print("It wasn't very effective.")
+            elif (self.type is types[0] and other_pokemon.type is types[2]) or (self.type is types[1] and other_pokemon.type is types[0]) or (self.type is types[2] and other_pokemon.type is types[1]):
+                damage = self.level * 2
+                print(f"{self.name} attacks {other_pokemon.name} for {damage} damage!")
+                print("It was super effective!")
+            else:
+                damage = self.level
+                print(f"{self.name} attacks {other_pokemon.name} for {damage} damage!")
+            other_pokemon.lose_health(damage)
         else:
-            damage = self.level
-            print(f"{self.name} attacks {other_pokemon.name} for {damage} damage!")
-        other_pokemon.lose_health(damage)
+            print("Can't attack a pokemon that is knocked out!")
         
 
     def printStats(self):
@@ -90,8 +95,13 @@ class Trainer:
 
     def useRevive(self):
         if self.numRevives > 0:
-            print(f"{self.name} used a Revive!")
-            self.pokeTeam[self.current_pokemon].revive()
+            if self.pokeTeam[self.current_pokemon].health <= 0:
+                print(f"{self.name} used a Revive!")
+                self.pokeTeam[self.current_pokemon].revive()
+            else:
+                print("Can't use revive on pokemon that aren't knocked out.")
+        else:
+            print(f"{self.name} doesn't have any revives left!")
 
     def attack_other_trainer(self, other_trainer):
         self.pokeTeam[self.current_pokemon].attack(other_trainer.pokeTeam[other_trainer.current_pokemon])
@@ -109,12 +119,8 @@ trainer_two = Trainer("Blue", 3, 1, [c, b, a])
 
 trainer_one.attack_other_trainer(trainer_two)   # prints to terminal
 
-trainer_one.attack_other_trainer(trainer_two)   # prints to terminal
+trainer_one.attack_other_trainer(trainer_two)
 
-trainer_one.attack_other_trainer(trainer_two)   # prints to terminal
+trainer_one.attack_other_trainer(trainer_two)
 
-trainer_one.attack_other_trainer(trainer_two)   # prints to terminal
-
-trainer_one.attack_other_trainer(trainer_two)   # prints to terminal
-
-trainer_two.useRevive()   # prints to terminal
+trainer_two.useRevive()
