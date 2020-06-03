@@ -51,7 +51,7 @@ class Pokemon:
     def attack(self, other_pokemon):
         types = ["grass", "fire", "water"]
         damage = 0
-        if self.health > 0:
+        if other_pokemon.health > 0:
             if (self.type is types[0] and other_pokemon.type is types[1]) or (self.type is types[1] and other_pokemon.type is types[2]) or (self.type is types[2] and other_pokemon.type is types[0]):
                 damage = self.level / 2
                 print(f"{self.name} attacks {other_pokemon.name} for {damage} damage!")
@@ -123,4 +123,4 @@ trainer_one.attack_other_trainer(trainer_two)
 
 trainer_one.attack_other_trainer(trainer_two)
 
-trainer_two.useRevive()
+trainer_one.attack_other_trainer(trainer_two)
