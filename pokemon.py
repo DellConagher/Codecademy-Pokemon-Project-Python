@@ -106,6 +106,38 @@ class Trainer:
     def attack_other_trainer(self, other_trainer):
         self.pokeTeam[self.current_pokemon].attack(other_trainer.pokeTeam[other_trainer.current_pokemon])
 
+    def switch_Pokemon(self):
+        poke_choice = input("Choose the pokemon you would like to switch to: ")
+        poke_choice = poke_choice.upper()
+
+        if poke_choice == "BULBASAUR":
+            index = self.pokeTeam.index(a)
+            if self.pokeTeam[index].health > 0:
+                self.current_pokemon = index
+                print("You sent out Bulbasaur!")
+            else:
+                print("You can't send out a pokemon with no health.")
+        elif poke_choice == "CHARMANDER":
+            index = self.pokeTeam.index(b)
+            if self.pokeTeam[index].health > 0:
+                self.current_pokemon = index
+                print("You sent out Charmander!")
+            else:
+                print("You can't send out a pokemon with no health.")
+        elif poke_choice == "SQUIRTLE":
+            index = self.pokeTeam.index(c)
+            if self.pokeTeam[index].health > 0:
+                self.current_pokemon = index
+                print("You sent out Squirtle!")
+            else:
+                print("You can't send out a pokemon with no health.")
+        else:
+            print("That's not a vaild Pokemon.")
+
+    def display_current_pokemon(self):
+        print(f"Your current Pokemon is {self.pokeTeam[self.current_pokemon].name}.")
+
+
 
 
 a = Pokemon("Bulbasaur", 5, "grass")
@@ -117,10 +149,5 @@ trainer_one = Trainer("Red", 3, 1, [a, b, c])
 trainer_two = Trainer("Blue", 3, 1, [c, b, a])
 
 
-trainer_one.attack_other_trainer(trainer_two)   # prints to terminal
-
-trainer_one.attack_other_trainer(trainer_two)
-
-trainer_one.attack_other_trainer(trainer_two)
-
-trainer_one.attack_other_trainer(trainer_two)
+trainer_two.switch_Pokemon()
+trainer_two.display_current_pokemon()
