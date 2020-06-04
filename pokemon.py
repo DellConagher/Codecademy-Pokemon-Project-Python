@@ -109,6 +109,7 @@ class Trainer:
     def switch_Pokemon(self):
         poke_choice = input("Choose the pokemon you would like to switch to: ")
         poke_choice = poke_choice.upper()
+        no_health = "You can't send out a pokemon with no health."
 
         if poke_choice == "BULBASAUR":
             index = self.pokeTeam.index(a)
@@ -116,21 +117,21 @@ class Trainer:
                 self.current_pokemon = index
                 print("You sent out Bulbasaur!")
             else:
-                print("You can't send out a pokemon with no health.")
+                print(no_health)
         elif poke_choice == "CHARMANDER":
             index = self.pokeTeam.index(b)
             if self.pokeTeam[index].health > 0:
                 self.current_pokemon = index
                 print("You sent out Charmander!")
             else:
-                print("You can't send out a pokemon with no health.")
+                print(no_health)
         elif poke_choice == "SQUIRTLE":
             index = self.pokeTeam.index(c)
             if self.pokeTeam[index].health > 0:
                 self.current_pokemon = index
                 print("You sent out Squirtle!")
             else:
-                print("You can't send out a pokemon with no health.")
+                print(no_health)
         else:
             print("That's not a vaild Pokemon.")
 
